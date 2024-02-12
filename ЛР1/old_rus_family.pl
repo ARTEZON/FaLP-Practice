@@ -20,8 +20,10 @@ woman(broneslava).
 woman(veselina).
 woman(zdislava).
 
-% Вывод на экран всех мужчин и всех женщин
+% men/0 - вывод на экран всех мужчин
 men :- man(X), write(X), nl, fail.
+
+% women/0 - вывод на экран всех женщин
 women :- woman(X), write(X), nl, fail.
 
 % Связь родители-дети
@@ -55,31 +57,30 @@ parent(duhovlad,zlatomir).
 parent(zhdana,zdislava).
 parent(zhdana,zlatomir).
 
-% children(+X) - все дети X
+% children(+X) - вывести на экран всех детей X
 children(X) :- parent(X, Y), write(Y), nl, fail.
 
-% mother(+X, +Y) - проверка является ли X матерью Y
+% mother(?X, +Y) - проверить является ли X матерью Y или записать маму Y в X
 mother(X, Y) :- parent(X, Y), woman(X).
 
-% mother(+X) - мама X
-mother(X) :- parent(Y, X), woman(Y), write(Y), nl, fail.
+% mother(+X) - вывести на экран маму X
+mother(X) :- mother(Y, X), write(Y).
 
-% brother(+X, +Y) - проверка является ли X братом Y
+% brother(?X, +Y) - проверить является ли X братом Y или записать брата Y в X
 brother(X, Y) :- parent(Z, X), parent(Z, Y), X \= Y, man(Z), man(X).
 
-% brothers(+X) - братья X
-brothers(X) :- parent(Z, X), parent(Z, Y), X \= Y, man(Z), man(Y), write(Y), nl, fail.
+% brothers(+X) - вывести на экран братьев X
+brothers(X) :- brother(Y, X), write(Y), nl, fail.
 
-% sister(+X, +Y) - проверка является ли X сестрой Y
+% sister(?X, +Y) - проверить является ли X сестрой Y или записать сестру Y в X
 sister(X, Y) :- parent(Z, X), parent(Z, Y), X \= Y, man(Z), woman(X).
 
-% sisters(+X) - сёстры X
-sisters(X) :- parent(Z, X), parent(Z, Y), X \= Y, man(Z), woman(Y), write(Y), nl, fail.
+% sisters(+X) - вывести на экран сестёр X
+sisters(X) :- sister(Y, X), write(Y), nl, fail.
 
-% b_s(+X, +Y) - являются ли X и Y родными братом и сестрой или братьями или сестрами
+% b_s(?X, +Y) - проверить является ли X братом или сестрой Y или записать брата или сестру Y в X
 b_s(X, Y) :- brother(X, Y).
 b_s(X, Y) :- sister(X, Y).
 
-% b_s(+X) - все братья или сестры X
-b_s(X) :- brother(X, Y), write(Y), nl, fail.
-b_s(X) :- sister(X, Y), write(Y), nl, fail.
+% b_s(+X) - вывести всех братьев или сестёр X
+b_s(X) :- b_s(Y, X), write(Y), nl, fail.
