@@ -129,7 +129,7 @@ grand_pa_and_da_2(X, Y) :- grand_pa(X, Y), woman(Y).
 grand_pa_and_da_2(X, Y) :- grand_pa(Y, X), woman(X).
 
 % aunt(?X, +Y) - проверить является ли X тётей Y или записать тётю Y в X (с использованем только базы фактов)
-aunt(X, Y) :- parent(W, X), parent(W, Z), X \= Z, woman(X), parent(Z, Y).
+aunt(X, Y) :- parent(W, X), parent(W, Z), X \= Z, man(W), woman(X), parent(Z, Y).
 
 % aunt_2(?X, +Y) - проверить является ли X тётей Y или записать тётю Y в X (с использованем готовых предикатов)
 aunt_2(X, Y) :- sister(X, Z), parent(Z, Y).
