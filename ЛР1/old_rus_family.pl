@@ -66,6 +66,12 @@ mother(X, Y) :- parent(X, Y), woman(X).
 % mother(+X) - вывести на экран маму X
 mother(X) :- mother(Y, X), write(Y).
 
+% father(?X, +Y) - проверить является ли X отцом Y или записать папу Y в X
+father(X, Y) :- parent(X, Y), man(X).
+
+% father(+X) - вывести на экран папу X
+father(X) :- father(Y, X), write(Y).
+
 % brother(?X, +Y) - проверить является ли X братом Y или записать брата Y в X
 brother(X, Y) :- parent(Z, X), parent(Z, Y), X \= Y, man(Z), man(X).
 
@@ -100,3 +106,33 @@ husband(X, Y) :- parent(X, Z), parent(Y, Z), man(X), woman(Y).
 
 % husband(+X) - вывести на экран мужа X
 husband(X) :- husband(Y, X), write(Y).
+
+
+
+% Задание 3
+
+% grand_pa(?X, +Y) - проверить является ли X дедушкой Y или записать дедушку Y в X (с использованем только базы фактов)
+grand_pa(X, Y) :- parent(X, Z), parent(Z, Y), man(X).
+
+% grand_pa_2(?X, +Y) - проверить является ли X дедушкой Y или записать дедушку Y в X (с использованем готовых предикатов)
+grand_pa_2(X, Y) :- father(X, Z), parent(Z, Y).
+
+% grand_pas(+X) - вывести всех дедушек X
+grand_pas(X) :- grand_pa(Y, X), write(Y), nl, fail.
+
+% grand_pa_and_da(+X, +Y) - проверить являются ли X и Y дедушкой и внучкой или внучкой и дедушкой (с использованем только базы фактов)
+grand_pa_and_da(X, Y) :- parent(X, Z), parent(Z, Y), man(X), woman(Y).
+grand_pa_and_da(X, Y) :- parent(Y, Z), parent(Z, X), man(Y), woman(X).
+
+% grand_pa_and_da_2(+X, +Y) - проверить являются ли X и Y дедушкой и внучкой или внучкой и дедушкой (с использованем готовых предикатов)
+grand_pa_and_da_2(X, Y) :- grand_pa(X, Y), woman(Y).
+grand_pa_and_da_2(X, Y) :- grand_pa(Y, X), woman(X).
+
+% aunt(?X, +Y) - проверить является ли X тётей Y или записать тётю Y в X (с использованем только базы фактов)
+aunt(X, Y) :- parent(W, X), parent(W, Z), X \= Z, woman(X), parent(Z, Y).
+
+% aunt_2(?X, +Y) - проверить является ли X тётей Y или записать тётю Y в X (с использованем готовых предикатов)
+aunt_2(X, Y) :- sister(X, Z), parent(Z, Y).
+
+% aunts(+X) - вывести всех тётей X
+aunts(X) :- aunt(Y, X), write(Y), nl, fail.
