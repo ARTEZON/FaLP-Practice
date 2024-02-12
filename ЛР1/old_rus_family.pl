@@ -84,3 +84,19 @@ b_s(X, Y) :- sister(X, Y).
 
 % b_s(+X) - вывести всех братьев или сестёр X
 b_s(X) :- b_s(Y, X), write(Y), nl, fail.
+
+
+
+% Задание 2. Вариант 5 (17 % 12 = 5)
+
+% son(?X, +Y) - проверить является ли X сыном Y или записать сына Y в X
+son(X, Y) :- parent(Y, X), man(X).
+
+% son(+X) - вывести на экран сыновей X
+son(X) :- son(Y, X), write(Y), nl, fail.
+
+% husband(?X, +Y) - проверить является ли X мужем Y или записать мужа Y в X
+husband(X, Y) :- parent(X, Z), parent(Y, Z), man(X), woman(Y).
+
+% husband(+X) - вывести на экран мужа X
+husband(X) :- husband(Y, X), write(Y).
