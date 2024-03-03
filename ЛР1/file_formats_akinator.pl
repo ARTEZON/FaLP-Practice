@@ -152,7 +152,29 @@ read(X_office).
 
 % start/0
 start :- writeln("Think about a file format. I will try to guess it."),
-question_text_file(X_text_file), question_content(X_content), question_compression(X_compression), question_feature(X_feature), question_office(X_office),
-text_file(X, X_text_file), content(X, X_content), compression(X, X_compression), feature(X, X_feature), office(X, X_office),
-string_upper(X, X_upper), write("\nI guessed it! Your file format is "), write(X_upper), write(".");
-write("\nSorry, I couldn't guess your file format."), fail.
+
+    question_text_file(X_text_file),
+    findall(Y, (text_file(Y, X_text_file)), MatchList1),
+    check_if_guessed(MatchList1),
+
+    question_content(X_content),
+    findall(Y, (text_file(Y, X_text_file), content(Y, X_content)), MatchList2),
+    check_if_guessed(MatchList2),
+
+    question_compression(X_compression),
+    findall(Y, (text_file(Y, X_text_file), content(Y, X_content), compression(Y, X_compression)), MatchList3),
+    check_if_guessed(MatchList3),
+
+    question_feature(X_feature),
+    findall(Y, (text_file(Y, X_text_file), content(Y, X_content), compression(Y, X_compression), feature(Y, X_feature)), MatchList4),
+    check_if_guessed(MatchList4),
+
+    question_office(X_office),
+    findall(Y, (text_file(Y, X_text_file), content(Y, X_content), compression(Y, X_compression), feature(Y, X_feature), office(Y, X_office)), MatchList5),
+    check_if_guessed(MatchList5),
+
+    write("\nSorry, I couldn't guess your file format."), !, fail; true.
+
+% check_if_guessed(+MatchList)
+check_if_guessed(MatchList) :- length(MatchList, MatchCount), (MatchCount =:= 1 -> [Answer | _] = MatchList,
+string_upper(Answer, Answer_upper), write("\nI guessed it! Your file format is "), write(Answer_upper), write("."), fail; true).
