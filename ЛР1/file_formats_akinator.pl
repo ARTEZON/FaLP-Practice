@@ -1,3 +1,6 @@
+% To play Akinator, type "start."
+
+
 text_file(txt, 1).
 text_file(jpeg, 2).
 text_file(png, 2).
@@ -120,14 +123,14 @@ made_by_apple(avi, 2).
 made_by_apple(mov, 1).
 
 
-% question_text_file(-X_text_file)
+% question_text_file(-X_text_file) - ask 1st question
 question_text_file(X_text_file) :-
 writeln("\nDoes this file format open correctly in a simple text editor like Notepad?"),
 writeln("1. Yes"),
 writeln("2. No"),
 read(X_text_file).
 
-% question_content(-X_content)
+% question_content(-X_content) - ask 2nd question
 question_content(X_content) :-
 writeln("\nWhat data does this file format contain?"),
 writeln("1. Text, documents"),
@@ -139,7 +142,7 @@ writeln("6. Compiled programs"),
 writeln("7. It contains other files within itself"),
 read(X_content).
 
-% question_compression(-X_compression)
+% question_compression(-X_compression) - ask 3rd question
 question_compression(X_compression) :-
 writeln("\nDoes this format support compression?"),
 writeln("1. No"),
@@ -147,7 +150,7 @@ writeln("2. Yes, lossless compression"),
 writeln("3. Yes, lossy compression"),
 read(X_compression).
 
-% question_feature(-X_feature)
+% question_feature(-X_feature) - ask 4th question
 question_feature(X_feature) :-
 writeln("\nWhat feature does this file format have?"),
 writeln("1. It's used for short looping animations"),
@@ -158,21 +161,21 @@ writeln("5. This format is intended for Android OS"),
 writeln("6. None of the above"),
 read(X_feature).
 
-% question_office(-X_office)
+% question_office(-X_office) - ask 5th question
 question_office(X_office) :-
 writeln("\nIs this format designed for Microsoft Office?"),
 writeln("1. Yes"),
 writeln("2. No"),
 read(X_office).
 
-% question_web_pages(-X_web_pages)
+% question_web_pages(-X_web_pages) - ask additional question to distinguish between TXT and HTML
 question_web_pages(X_web_pages) :-
 writeln("\nIs this format used for web pages?"),
 writeln("1. Yes"),
 writeln("2. No"),
 read(X_web_pages).
 
-% question_made_by_apple(-X_made_by_apple)
+% question_made_by_apple(-X_made_by_apple) - ask additional question to distinguish between AVI and MOV
 question_made_by_apple(X_made_by_apple) :-
 writeln("\nIs this format developed by Apple?"),
 writeln("1. Yes"),
@@ -180,12 +183,12 @@ writeln("2. No"),
 read(X_made_by_apple).
 
 
-% in_list(+List, +Element)
+% in_list(+List, +Element) - check if element is in list
 in_list([El|_], El).
 in_list([_|T], El) :- in_list(T, El).
 
 
-% start/0
+% start/0 - start the game
 start :- writeln("Think about a file format. I will try to guess it."),
 
     question_text_file(X_text_file),
@@ -220,6 +223,6 @@ start :- writeln("Think about a file format. I will try to guess it."),
 
     write("\nSorry, I couldn't guess your file format."), !, fail; true.
 
-% check_if_guessed(+MatchList)
+% check_if_guessed(+MatchList) - check if a given list contains only one element and if so, congratulate the player and write this element
 check_if_guessed(MatchList) :- length(MatchList, MatchCount), (MatchCount =:= 1 -> [Answer | _] = MatchList,
 string_upper(Answer, Answer_upper), write("\nI guessed it! Your file format is "), write(Answer_upper), write("."), fail; true).
