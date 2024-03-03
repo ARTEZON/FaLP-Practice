@@ -18,6 +18,8 @@ text_file(xlsx, 2).
 text_file(csv, 1).
 text_file(exe, 2).
 text_file(apk, 2).
+text_file(html, 1).
+text_file(mov, 2).
 
 content(txt, 1).
 content(jpeg, 2).
@@ -39,6 +41,8 @@ content(xlsx, 5).
 content(csv, 5).
 content(exe, 6).
 content(apk, 6).
+content(html, 1).
+content(mov, 3).
 
 compression(txt, 1).
 compression(jpeg, 3).
@@ -60,6 +64,8 @@ compression(xlsx, 2).
 compression(csv, 1).
 compression(exe, 1).
 compression(apk, 2).
+compression(html, 1).
+compression(mov, 3).
 
 feature(txt, 6).
 feature(jpeg, 6).
@@ -81,6 +87,8 @@ feature(xlsx, 6).
 feature(csv, 6).
 feature(exe, 6).
 feature(apk, 5).
+feature(html, 6).
+feature(mov, 6).
 
 office(txt, 2).
 office(jpeg, 2).
@@ -102,6 +110,14 @@ office(xlsx, 1).
 office(csv, 2).
 office(exe, 2).
 office(apk, 2).
+office(html, 2).
+office(mov, 2).
+
+web_pages(txt, 2).
+web_pages(html, 1).
+
+made_by_apple(avi, 2).
+made_by_apple(mov, 1).
 
 
 % question_text_file(-X_text_file)
@@ -149,6 +165,25 @@ writeln("1. Yes"),
 writeln("2. No"),
 read(X_office).
 
+% question_web_pages(-X_web_pages)
+question_web_pages(X_web_pages) :-
+writeln("\nIs this format used for web pages?"),
+writeln("1. Yes"),
+writeln("2. No"),
+read(X_web_pages).
+
+% question_made_by_apple(-X_made_by_apple)
+question_made_by_apple(X_made_by_apple) :-
+writeln("\nIs this format developed by Apple?"),
+writeln("1. Yes"),
+writeln("2. No"),
+read(X_made_by_apple).
+
+
+% in_list(+List, +Element)
+in_list([El|_], El).
+in_list([_|T], El) :- in_list(T, El).
+
 
 % start/0
 start :- writeln("Think about a file format. I will try to guess it."),
@@ -172,6 +207,16 @@ start :- writeln("Think about a file format. I will try to guess it."),
     question_office(X_office),
     findall(Y, (text_file(Y, X_text_file), content(Y, X_content), compression(Y, X_compression), feature(Y, X_feature), office(Y, X_office)), MatchList5),
     check_if_guessed(MatchList5),
+
+    (in_list(MatchList5, txt), in_list(MatchList5, html) ->
+        question_web_pages(X_web_pages),
+        findall(Y, (text_file(Y, X_text_file), content(Y, X_content), compression(Y, X_compression), feature(Y, X_feature), office(Y, X_office), web_pages(Y, X_web_pages)), MatchList6),
+        check_if_guessed(MatchList6); true),
+
+    (in_list(MatchList5, avi), in_list(MatchList5, mov) ->
+        question_made_by_apple(X_made_by_apple),
+        findall(Y, (text_file(Y, X_text_file), content(Y, X_content), compression(Y, X_compression), feature(Y, X_feature), office(Y, X_office), made_by_apple(Y, X_made_by_apple)), MatchList7),
+        check_if_guessed(MatchList7); true),
 
     write("\nSorry, I couldn't guess your file format."), !, fail; true.
 
