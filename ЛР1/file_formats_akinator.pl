@@ -106,52 +106,52 @@ office(apk, 2).
 
 % question_text_file(-X_text_file)
 question_text_file(X_text_file) :-
-write("\nDoes this file format open correctly in a simple text editor like Notepad?"), nl,
-write("1. Yes"), nl,
-write("2. No"), nl,
+writeln("\nDoes this file format open correctly in a simple text editor like Notepad?"),
+writeln("1. Yes"),
+writeln("2. No"),
 read(X_text_file).
 
 % question_content(-X_content)
 question_content(X_content) :-
-write("\nWhat data does this file format contain?"), nl,
-write("1. Text, documents"), nl,
-write("2. Images"), nl,
-write("3. Videos"), nl,
-write("4. Music"), nl,
-write("5. Spreadsheets"), nl,
-write("6. Compiled programs"), nl,
-write("7. It contains other files within itself"), nl,
+writeln("\nWhat data does this file format contain?"),
+writeln("1. Text, documents"),
+writeln("2. Images"),
+writeln("3. Videos"),
+writeln("4. Music"),
+writeln("5. Spreadsheets"),
+writeln("6. Compiled programs"),
+writeln("7. It contains other files within itself"),
 read(X_content).
 
 % question_compression(-X_compression)
 question_compression(X_compression) :-
-write("\nDoes this format support compression?"), nl,
-write("1. No"), nl,
-write("2. Yes, lossless compression"), nl,
-write("3. Yes, lossy compression"), nl,
+writeln("\nDoes this format support compression?"),
+writeln("1. No"),
+writeln("2. Yes, lossless compression"),
+writeln("3. Yes, lossy compression"),
 read(X_compression).
 
 % question_feature(-X_feature)
 question_feature(X_feature) :-
-write("\nWhat feature does this file format have?"), nl,
-write("1. It's used for short looping animations"), nl,
-write("2. The file extension contains a number"), nl,
-write("3. Files can store individual image layers"), nl,
-write("4. This is a vector graphics format"), nl,
-write("5. This format is intended for Android OS"), nl,
-write("6. None of the above"), nl,
+writeln("\nWhat feature does this file format have?"),
+writeln("1. It's used for short looping animations"),
+writeln("2. The file extension contains a number"),
+writeln("3. Files can store individual image layers"),
+writeln("4. This is a vector graphics format"),
+writeln("5. This format is intended for Android OS"),
+writeln("6. None of the above"),
 read(X_feature).
 
 % question_office(-X_office)
 question_office(X_office) :-
-write("\nIs this format designed for Microsoft Office?"), nl,
-write("1. Yes"), nl,
-write("2. No"), nl,
+writeln("\nIs this format designed for Microsoft Office?"),
+writeln("1. Yes"),
+writeln("2. No"),
 read(X_office).
 
 
 % start/0
-start :- write("Think about a file format. I will try to guess it."), nl,
+start :- writeln("Think about a file format. I will try to guess it."),
 question_text_file(X_text_file), question_content(X_content), question_compression(X_compression), question_feature(X_feature), question_office(X_office),
 text_file(X, X_text_file), content(X, X_content), compression(X, X_compression), feature(X, X_feature), office(X, X_office),
 string_upper(X, X_upper), write("\nI guessed it! Your file format is "), write(X_upper), write(".");
