@@ -38,3 +38,11 @@ is_square_free(Number) :- is_square_free(Number, Number).
 % is_square_free(+Number, +Divisor) - вспомогательный предикат для данной проверки
 is_square_free(_, 1).
 is_square_free(Number, Divisor) :- not((is_divisor(Number, Divisor), is_square(Divisor))), NewDivisor is Divisor - 1, is_square_free(Number, NewDivisor).
+
+% read_list(+Length, -List) - ввести список с клавиатуры
+read_list(0, []).
+read_list(Length, [Head|Tail]) :- read(Head), NewLength is Length - 1, read_list(NewLength, Tail).
+
+% write_list(+List) - вывести список на экран
+write_list([]).
+write_list([Head|Tail]) :- write(Head), write(" "), write_list(Tail).
