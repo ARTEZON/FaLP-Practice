@@ -46,3 +46,19 @@ read_list(Length, [Head|Tail]) :- read(Head), NewLength is Length - 1, read_list
 % write_list(+List) - вывести список на экран
 write_list([]).
 write_list([Head|Tail]) :- write(Head), write(" "), write_list(Tail).
+
+% sum_list_down(+List, ?Sum) - проверяет, является ли Sum суммой элементов списка или записывает в эту переменную сумму элементов с помощью рекурсии вниз
+sum_list_down(List, Sum) :- sum_list_down(List, 0, Sum).
+% sum_list_down(+List, +CurSum, ?Sum) - вспомогательный предикат для рекурсии sum_list_down
+sum_list_down([], CurSum, CurSum) :- !.
+sum_list_down([Head|Tail], CurSum, Sum) :- NewSum is CurSum + Head, sum_list_down(Tail, NewSum, Sum).
+
+% program_calc_sum_list/0 - программа, читающая список, считающая сумму элементов и выводящая её на экран
+program_calc_sum_list :- write("Please enter your list length here: "), read(Length),
+                         write("Enter "), write(Length), write(" numbers separated by dots: "), nl,
+                         read_list(Length, List), sum_list_down(List, Sum),
+                         write("The sum of your numbers is "), write(Sum), write(".").
+
+% sum_list_up(+List, ?Sum) - проверяет, является ли Sum суммой элементов списка или записывает в эту переменную сумму элементов с помощью рекурсии вверх
+sum_list_up([], 0) :- !.
+sum_list_up([Head|Tail], Sum) :- sum_list_up(Tail, SumOfTail), Sum is SumOfTail + Head.
