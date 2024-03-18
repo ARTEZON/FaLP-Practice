@@ -62,3 +62,11 @@ program_calc_sum_list :- write("Please enter your list length here: "), read(Len
 % sum_list_up(+List, ?Sum) - проверяет, является ли Sum суммой элементов списка или записывает в эту переменную сумму элементов с помощью рекурсии вверх
 sum_list_up([], 0) :- !.
 sum_list_up([Head|Tail], Sum) :- sum_list_up(Tail, SumOfTail), Sum is SumOfTail + Head.
+
+% remove_items_by_digit_sum(+DigitSum, +ListIn, -ListOut) - удаляет из списка элементы, сумма цифр которых равна данной
+remove_items_by_digit_sum(_, [], []) :- !.
+remove_items_by_digit_sum(DigitSum, [HeadIn|TailIn], ListOut) :- digits_sum_down(HeadIn, HeadInSum), HeadInSum == DigitSum, remove_items_by_digit_sum(DigitSum, TailIn, ListOut).
+remove_items_by_digit_sum(DigitSum, [HeadIn|TailIn], [HeadIn|TailOut]) :- digits_sum_down(HeadIn, HeadInSum), HeadInSum =\= DigitSum, remove_items_by_digit_sum(DigitSum, TailIn, TailOut).
+
+% remove_items_by_digit_sum_and_print(+DigitSum, +List) - удаляет из списка элементы, сумма цифр которых равна данной, и выводит результат на экран
+remove_items_by_digit_sum_and_print(DigitSum, List) :- remove_items_by_digit_sum(DigitSum, List, Result), write_list(Result).
