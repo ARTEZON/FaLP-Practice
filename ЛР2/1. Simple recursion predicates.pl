@@ -22,3 +22,19 @@ digits_sum_down(N, Sum) :- digits_sum_down(N, 0, Sum).
 % digits_sum_down(+N, +CurrentSum, -Sum) - вспомогательный предикат для суммы цифр с рекурсией вниз
 digits_sum_down(0, Sum, Sum) :- !.
 digits_sum_down(N, CurrentSum, Sum) :- N1 is N // 10, Remainder is N mod 10, NewSum is CurrentSum + Remainder, digits_sum_down(N1, NewSum, Sum).
+
+% is_divisor(+Number, +Divisor) - проверяет, является ли Divisor делителем Number
+is_divisor(Number, Divisor) :- Remainder is Number mod Divisor, Remainder is 0.
+
+% is_square(+PossibleSquare) - проверяет, является ли число PossibleSquare квадратом какого-либо натурального числа
+is_square(PossibleSquare) :- MaxDivisor is PossibleSquare // 2, is_square(PossibleSquare, MaxDivisor).
+% is_square(+PossibleSquare, +Number) - проверяет, является ли число PossibleSquare квадратом числа Number
+is_square(_, 1) :- !, fail.
+is_square(PossibleSquare, Number) :- PossibleSquare is Number * Number; NewNumber is Number - 1, is_square(PossibleSquare, NewNumber).
+
+% is_square_free(+Number) - проверяет, является ли число Number свободным от квадратов
+is_square_free(1).
+is_square_free(Number) :- is_square_free(Number, Number).
+% is_square_free(+Number, +Divisor) - вспомогательный предикат для данной проверки
+is_square_free(_, 1).
+is_square_free(Number, Divisor) :- not((is_divisor(Number, Divisor), is_square(Divisor))), NewDivisor is Divisor - 1, is_square_free(Number, NewDivisor).
