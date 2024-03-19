@@ -16,7 +16,7 @@ max_digit_up(Number, MaxDigit) :- CurrentDigit is Number mod 10, NextNumber is N
 
 % max_digit_down(+Number, -MaxDigit) - находит максимальную цифру числа с помощью рекурсии вниз
 max_digit_down(Number, MaxDigit) :- AbsNumber is abs(Number), max_digit_down(AbsNumber, 0, MaxDigit).
-% max_digit_down(+Number, +CurrentMax, -MaxDigit) - вспомогателный предикат
+% max_digit_down(+Number, +CurrentMax, -MaxDigit) - предикат, выполняющий рекурсию
 max_digit_down(0, CurrentMax, CurrentMax).
 max_digit_down(Number, CurrentMax, MaxDigit) :- CurrentDigit is Number mod 10, NextNumber is Number // 10,
     NewMax is max(CurrentMax, CurrentDigit), max_digit_down(NextNumber, NewMax, MaxDigit).
@@ -39,7 +39,7 @@ min_odd_digit_up(Number, MinOddDigit) :- CurrentDigit is Number mod 10, NextNumb
 
 % min_odd_digit_down(+Number, -MinOddDigit) - находит минимальную нечётную цифру числа с помощью рекурсии вниз
 min_odd_digit_down(Number, MinOddDigit) :- AbsNumber is abs(Number), min_odd_digit_down(AbsNumber, -1, MinOddDigit).
-% min_odd_digit_down(+Number, +CurrentOddMin, -MinOddDigit) - вспомогателный предикат
+% min_odd_digit_down(+Number, +CurrentOddMin, -MinOddDigit) - предикат, выполняющий рекурсию
 min_odd_digit_down(0, CurrentOddMin, CurrentOddMin).
 min_odd_digit_down(Number, CurrentOddMin, MinOddDigit) :- CurrentDigit is Number mod 10, NextNumber is Number // 10,
     (is_odd(CurrentDigit) -> (CurrentOddMin =\= -1 -> min(CurrentOddMin, CurrentDigit, NewMin);
