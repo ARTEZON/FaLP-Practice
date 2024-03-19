@@ -1,3 +1,5 @@
+:- include('1. Simple recursion predicates.pl').
+
 % Вариант 5
 
 % Найти максимальную цифру числа.
@@ -43,9 +45,16 @@ min_odd_digit_down(Number, CurrentOddMin, MinOddDigit) :- CurrentDigit is Number
     (is_odd(CurrentDigit) -> (CurrentOddMin =\= -1 -> min(CurrentOddMin, CurrentDigit, NewMin);
     NewMin is CurrentDigit); NewMin is CurrentOddMin), min_odd_digit_down(NextNumber, NewMin, MinOddDigit).
 
-
-
-
-
-
 % Найти НОД двух чисел.
+
+% gcd_up(+A, +B, -GCD) - нахождение НОД двух чисел A и B рекурсией вверх
+gcd_up(A, B, GCD) :- (A > B -> gcd_up(A, B, B, GCD); gcd_up(B, A, A, GCD)).
+% gcd_up(+A, +B, +CurrentGCD, -GCD) - предикат, выполняющий рекурсию
+gcd_up(_, _, 1, 1) :- !.
+gcd_up(A, B, CurrentPossibleGCD, GCD) :- NextPossibleGCD is CurrentPossibleGCD - 1, gcd_up(A, B, NextPossibleGCD, SmallerCommonDivisor),
+    (is_divisor(A, CurrentPossibleGCD), is_divisor(B, CurrentPossibleGCD), GCD is CurrentPossibleGCD, !; GCD is SmallerCommonDivisor).
+
+% gcd_down(+A, +B, -GCD) - нахождение НОД двух чисел A и B рекурсией вниз (алгоритм Евклида)
+gcd_down(A, 0, A) :- !.
+gcd_down(A, B, GCD) :- B > A -> gcd_down(B, A, GCD).
+gcd_down(A, B, GCD) :- Remainder is A mod B, gcd_down(B, Remainder, GCD).
