@@ -1,6 +1,7 @@
-:- include('1. Simple recursion predicates.pl').
+:- include('Basic Recursion [Task 1].pl').
 
 % Вариант 5
+
 
 % Найти максимальную цифру числа.
 
@@ -20,6 +21,7 @@ max_digit_down(Number, MaxDigit) :- AbsNumber is abs(Number), max_digit_down(Abs
 max_digit_down(0, CurrentMax, CurrentMax).
 max_digit_down(Number, CurrentMax, MaxDigit) :- CurrentDigit is Number mod 10, NextNumber is Number // 10,
     NewMax is max(CurrentMax, CurrentDigit), max_digit_down(NextNumber, NewMax, MaxDigit).
+
 
 % Найти минимальную нечётную цифру числа.
 
@@ -44,6 +46,7 @@ min_odd_digit_down(0, CurrentOddMin, CurrentOddMin).
 min_odd_digit_down(Number, CurrentOddMin, MinOddDigit) :- CurrentDigit is Number mod 10, NextNumber is Number // 10,
     (is_odd(CurrentDigit) -> (CurrentOddMin =\= -1 -> min(CurrentOddMin, CurrentDigit, NewMin);
     NewMin is CurrentDigit); NewMin is CurrentOddMin), min_odd_digit_down(NextNumber, NewMin, MinOddDigit).
+
 
 % Найти НОД двух чисел.
 
