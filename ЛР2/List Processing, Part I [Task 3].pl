@@ -49,3 +49,23 @@ program__find_missing_numbers :-
     write("Please enter your list length here: "), read(Length),
     write("Enter "), write(Length), writeln(" numbers separated by dots and spaces:"), read_list(Length, List),
     find_missing_numbers(List, Result), write("The missing numbers are "), write_list(Result).
+
+
+% Дан целочисленный массив. Необходимо найти элементы, расположенные между первым и последним максимальным.
+
+% slice_after_first(+List, +Element, -ResultList) - записывает в ResultList часть списка List после первого Element
+slice_after_first([], _, ResultList) :- ResultList = [], !.
+slice_after_first([H|T], Element, ResultList) :- H is Element -> ResultList = T; slice_after_first(T, Element, ResultList).
+
+% slice_before_last(+List, +Element, -ResultList) - записывает в ResultList часть списка List перед последним Element
+slice_before_last([H|T], Element, ResultList) :- reverse([H|T], Reversed), slice_after_first(Reversed, Element, Res), reverse(Res, ResultList).
+
+% between_first_and_last_max(+List, -ResultList) - записывает в ResultList список из элементов, расположенных между первым и последним максимальным
+between_first_and_last_max(List, ResultList) :- max_list_element(List, Max), slice_after_first(List, Max, Temp), slice_before_last(Temp, Max, ResultList).
+
+% program__between_first_and_last_max/0 - точка входа для нахождения элементов, расположенных между первым и последним максимальным
+program__between_first_and_last_max :-
+    writeln("The program will find list elements located between the first and last maximum."),
+    write("Please enter your list length here: "), read(Length),
+    write("Enter "), write(Length), writeln(" numbers separated by dots and spaces:"), !, read_list(Length, List), !,
+    between_first_and_last_max(List, Result), !, write("Result: "), write_list(Result).
