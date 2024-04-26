@@ -16,6 +16,9 @@ tailrec fun digitSumDown(number: Long, curSum: Long = 0): Long {
 
 fun getFunction(isDigitSum: Boolean): (Long) -> Long = if (isDigitSum) ::digitSumUp else ::factUp
 
+tailrec fun numberTraversal(n: Int, func: (Int, Int) -> Int, curRes: Int = 0): Int =
+    if (n == 0) curRes else numberTraversal(n / 10, func, func(curRes, n % 10))
+
 fun main() {
     println("Максимум")
     println(max(3, 2, 1))
@@ -43,5 +46,10 @@ fun main() {
     println(getFunction(true)(5))
     println(getFunction(true)(10))
     println(getFunction(true)(15))
-
+    println()
+    println("Обход числа")
+    println(numberTraversal(1234, { a, b -> a + b })) // сумма цифр
+    println(numberTraversal(1234, { a, b -> a * b }, 1)) // произведение цифр
+    println(numberTraversal(1234, { a, b -> if (a > b) a else b }, Int.MIN_VALUE)) // максимум цифр
+    println(numberTraversal(1234, { a, b -> if (a < b) a else b }, Int.MAX_VALUE)) // минимум цифр
 }
