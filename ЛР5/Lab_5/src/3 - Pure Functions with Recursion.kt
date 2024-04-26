@@ -20,6 +20,14 @@ tailrec fun minOddDigitTail(number: Int, curMinOdd: Int = 9): Int =
     else if (number % 2 == 1) minOddDigitTail(number / 10, min(curMinOdd, number % 10))
     else minOddDigitTail(number / 10, curMinOdd)
 
+// Найти НОД двух чисел.
+fun gcdUp(a: Int, b: Int, toCheck: Int = 1, curGCD: Int = 1): Int =
+    if (toCheck > a || toCheck > b) curGCD
+    else if (a % toCheck == 0 && b % toCheck == 0) max(curGCD, gcdUp(a, b, toCheck + 1, toCheck))
+    else gcdUp(a, b, toCheck + 1, curGCD)
+tailrec fun gcdTail(a: Int, b: Int): Int =
+    if (a == 0) b else gcdTail(b % a, a)
+
 fun main() {
     println("Найти максимальную цифру числа")
     println(maxDigitUp(8192))
@@ -36,4 +44,14 @@ fun main() {
     println(minOddDigitTail(238))
     println(minOddDigitTail(17))
     println(minOddDigitTail(583))
+    println()
+    println("Найти НОД двух чисел")
+    println(gcdUp(3, 5))
+    println(gcdUp(45, 30))
+    println(gcdUp(35, 7))
+    println(gcdUp(36, 60))
+    println(gcdTail(3, 5))
+    println(gcdTail(45, 30))
+    println(gcdTail(35, 7))
+    println(gcdTail(36, 60))
 }
