@@ -9,7 +9,7 @@ tailrec fun factDown(n: Long, curRes: Long = 1): Long {
 
 fun digitSumUp(number: Long): Long = if (number != 0L) digitSumUp(number / 10) + (number % 10) else 0
 
-fun digitSumDown(number: Long, curSum: Long = 0): Long {
+tailrec fun digitSumDown(number: Long, curSum: Long = 0): Long {
     val newSum = curSum + number % 10
     return if (number == 0L) newSum else digitSumDown(number / 10, newSum)
 }
