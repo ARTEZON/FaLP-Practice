@@ -7,6 +7,13 @@ tailrec fun factDown(n: Long, curRes: Long = 1): Long {
     return if (n <= 1) newRes else factDown(n - 1, newRes)
 }
 
+fun digitSumUp(number: Long): Long = if (number != 0L) digitSumUp(number / 10) + (number % 10) else 0
+
+fun digitSumDown(number: Long, curSum: Long = 0): Long {
+    val newSum = curSum + number % 10
+    return if (number == 0L) newSum else digitSumDown(number / 10, newSum)
+}
+
 fun main() {
     println(max(3, 2, 1))
     println(max(-17, -5, -24))
@@ -18,4 +25,10 @@ fun main() {
     println(factDown(10))
     println(factUp(20))
     println(factDown(20))
+    println()
+    println(digitSumUp(1337)) // 14
+    println(digitSumDown(1337)) // 14
+    println(digitSumUp(654219213)) // 33
+    println(digitSumDown(654219213)) // 33
+
 }
