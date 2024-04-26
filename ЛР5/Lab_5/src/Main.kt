@@ -2,17 +2,13 @@ fun max(x: Int, y: Int, z: Int): Int = if (x > y && x > z) x else if (y > z) y e
 
 fun factUp(n: Long): Long = if (n <= 1) 1 else n * factUp(n - 1)
 
-tailrec fun factDown(n: Long, curRes: Long = 1): Long {
-    val newRes = curRes * n
-    return if (n <= 1) newRes else factDown(n - 1, newRes)
-}
+tailrec fun factDown(n: Long, curRes: Long = 1): Long =
+    if (n <= 1) curRes else factDown(n - 1, curRes * n)
 
 fun digitSumUp(number: Long): Long = if (number != 0L) digitSumUp(number / 10) + (number % 10) else 0
 
-tailrec fun digitSumDown(number: Long, curSum: Long = 0): Long {
-    val newSum = curSum + number % 10
-    return if (number == 0L) newSum else digitSumDown(number / 10, newSum)
-}
+tailrec fun digitSumDown(number: Long, curSum: Long = 0): Long =
+    if (number == 0L) curSum else digitSumDown(number / 10, curSum + number % 10)
 
 fun getFunction(isDigitSum: Boolean): (Long) -> Long = if (isDigitSum) ::digitSumUp else ::factUp
 
@@ -39,10 +35,11 @@ fun main() {
     println(digitSumUp(654219213)) // 33
     println(digitSumDown(654219213)) // 33
     println()
-    println("Функция высшего порядка")
+    println("Функция высшего порядка с аргументом false")
     println(getFunction(false)(1))
     println(getFunction(false)(3))
     println(getFunction(false)(5))
+    println("Функция высшего порядка с аргументом true")
     println(getFunction(true)(5))
     println(getFunction(true)(10))
     println(getFunction(true)(15))
