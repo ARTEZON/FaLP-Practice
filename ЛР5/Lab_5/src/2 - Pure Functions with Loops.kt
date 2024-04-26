@@ -26,6 +26,19 @@ fun minOddDigit(n: Int): Int {
     return min
 }
 
+// Найти НОД двух чисел.
+fun gcd(n1: Int, n2: Int): Int {
+    var a = n1
+    var b = n2
+    var tmp: Int
+    while (b != 0) {
+        tmp = b
+        b = a % b
+        a = tmp
+    }
+    return a
+}
+
 fun main() {
     println("Найти максимальную цифру числа")
     println(maxDigit(8192))
@@ -37,4 +50,9 @@ fun main() {
     println(minOddDigit(17))
     println(minOddDigit(-583))
     println()
+    println("Найти НОД двух чисел")
+    println(gcd(3, 5))
+    println(gcd(45, 30))
+    println(gcd(35, 7))
+    println(gcd(36, 60))
 }
