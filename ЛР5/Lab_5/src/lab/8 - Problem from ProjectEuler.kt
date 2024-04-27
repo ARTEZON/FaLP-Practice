@@ -1,3 +1,5 @@
+package lab
+
 // Вариант 5
 
 fun pow(n: Int, p: Int): Int = if (p == 1) n else n * pow(n, p - 1)

@@ -1,3 +1,5 @@
+package lab
+
 import kotlin.math.abs
 
 // Вариант 5

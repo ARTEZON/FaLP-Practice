@@ -1,3 +1,5 @@
+package lab
+
 fun max(x: Int, y: Int, z: Int): Int = if (x > y && x > z) x else if (y > z) y else z
 
 fun factUp(n: Long): Long = if (n <= 1) 1 else n * factUp(n - 1)
