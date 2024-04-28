@@ -1,5 +1,7 @@
 package lab
 
+import kotlin.math.abs
+
 // Вариант 5
 
 // Вспомогательные функции
@@ -7,20 +9,20 @@ fun max(x: Int, y: Int): Int = if (x > y) x else y
 fun min(x: Int, y: Int): Int = if (x < y) x else y
 
 // Найти максимальную цифру числа.
-fun maxDigitUp(number: Int): Int = if (number != 0) max(maxDigitUp(number / 10), number % 10) else 0
+fun maxDigitUp(number: Int): Int = if (number != 0) max(maxDigitUp(abs(number) / 10), abs(number) % 10) else 0
 tailrec fun maxDigitTail(number: Int, curMax: Int = 0): Int =
-    if (number == 0) curMax else maxDigitTail(number / 10, max(curMax, number % 10))
+    if (number == 0) curMax else maxDigitTail(abs(number) / 10, max(curMax, abs(number) % 10))
 
 // Найти минимальную нечётную цифру числа.
 fun minOddDigitUp(number: Int): Int =
     if (number != 0)
-        if (number % 2 == 1) min(minOddDigitUp(number / 10), number % 10)
-        else minOddDigitUp(number / 10)
+        if (abs(number) % 2 == 1) min(minOddDigitUp(abs(number) / 10), abs(number) % 10)
+        else minOddDigitUp(abs(number) / 10)
     else 9
 tailrec fun minOddDigitTail(number: Int, curMinOdd: Int = 9): Int =
     if (number == 0) curMinOdd
-    else if (number % 2 == 1) minOddDigitTail(number / 10, min(curMinOdd, number % 10))
-    else minOddDigitTail(number / 10, curMinOdd)
+    else if (abs(number) % 2 == 1) minOddDigitTail(abs(number) / 10, min(curMinOdd, abs(number) % 10))
+    else minOddDigitTail(abs(number) / 10, curMinOdd)
 
 // Найти НОД двух чисел.
 fun gcdUp(a: Int, b: Int, toCheck: Int = 1, curGCD: Int = 1): Int =
