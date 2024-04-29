@@ -8,7 +8,7 @@ fun checkNumber(n: Int, power: Int): Boolean = n == numberTraversal(n, { a, b ->
 
 tailrec fun solve(power: Int, curN: Int = 10, curSum: Int = 0): Int =
     if (pow(9, power) * numberTraversal(curN, { a, _ -> a + 1 }) < curN) curSum
-    else solve(power, curN + 1, if (checkNumber(curN, power)) (curSum + curN).also { println(curN) } else curSum)
+    else solve(power, curN + 1, if (checkNumber(curN, power)) curSum + curN.also { println(it) } else curSum)
 
 
 fun main() {
