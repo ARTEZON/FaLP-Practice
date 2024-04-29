@@ -1,0 +1,5 @@
+java -jar MyProgramToWorkWithFiles.jar in.txt out.txt
+
+или
+
+java -jar MyProgramToWorkWithFiles.jar "C:\Users\ARTEZON\Desktop\Универ\ФиЛП\FaLP-Practice\ЛР5\Lab_5\in.txt" "C:\Users\ARTEZON\Desktop\Универ\ФиЛП\FaLP-Practice\ЛР5\Lab_5\out.txt"

@@ -23,34 +23,34 @@ fun getFunctionByName(fname: String): ((IntArray) -> Int)? {
 fun executeFunction(fname: String, args: IntArray): Int = getFunctionByName(fname)!!(args)
 
 fun main(args: Array<String>) {
-    val args = arrayOf(""""in.txt"""")
-    if (args.isEmpty()) {
-        println("Пожалуйста, укажите полный путь к файлу в командной строке")
+//    val args = arrayOf("in.txt", "out.txt")
+    if (args.count() < 2) {
+        println("Пожалуйста, укажите полный путь к входному и выходному файлам в командной строке")
         return
     }
-    val path = (if (args.size == 1) args[0] else args.joinToString(" ")).trim('"', '\'', ' ')
-    val file = File(path).canonicalFile
-    if (!file.exists()) {
-        println("Файл $file не существует")
+    val fileIn = File(args[0].trim('"', '\'', ' ')).canonicalFile
+    if (!fileIn.exists()) {
+        println("Файл $fileIn не существует")
         return
     }
+    val fileOut = File(args[1].trim('"', '\'', ' ')).canonicalFile
 
-//    println(file)
-//    val out = File(file.parent.plus("/out.txt"))
-//    println(out)
-
-    println("Чтение файла $file")
-    var curLine = 0
     try {
-        file.forEachLine {
+        println("Чтение файла $fileIn")
+        var curLine = 0
+        val results = ArrayList<String>()
+        fileIn.forEachLine {
             curLine++
             val line = it.trim().split("\\s+".toRegex())
             val func = line.last()
             if (func.isNotEmpty()) {
-                val nums = line.slice(0..line.count() - 2).map { it.toInt() }.toIntArray()
                 try {
+                    val nums = line.slice(0..line.count() - 2).map { it.toInt() }.toIntArray()
                     val result = executeFunction(func, nums)
-                    println("${nums.joinToString(" ")} $func $result")
+                    results.add("${nums.joinToString(" ")} $func $result")
+                }
+                catch (ex: NumberFormatException) {
+                    throw Exception("Ошибка во входных данных (строка $curLine): ${ex.message!!.split('"')[1]} не является целым числом")
                 }
                 catch (ex: NullPointerException) {
                     throw Exception("Ошибка во входных данных (строка $curLine): неверное название функции: $func")
@@ -60,6 +60,9 @@ fun main(args: Array<String>) {
                 }
             }
         }
+        println("Запись в файл $fileIn")
+        fileOut.writeText(results.joinToString("\n"))
+        println("Готово")
     }
     catch (ex: Exception) {
         println(ex.localizedMessage)
