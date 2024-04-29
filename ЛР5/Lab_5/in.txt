@@ -1,0 +1,7 @@
+10 15 gcd
+1337 maxDigit
+238 minOddDigit
+420 maxDigit
+29 minOddDigit
+24 16 gcd
+0 maxDigit
