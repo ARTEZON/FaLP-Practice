@@ -57,3 +57,20 @@ program__list_from_nonrepeating_elements :-
     write("[List 2] Please enter the length of the second list here: "), read(Length2),
     write("[List 2] Enter "), write(Length2), writeln(" numbers separated by dots and spaces:"), read_list(Length2, L2),
     write("Result: "), list_from_nonrepeating_elements(L1, L2, Result), write(Result).
+
+
+% Дан список. Построить новый список из квадратов неотрицательных чисел, меньших 100 и встречающихся в массиве больше 2 раз.
+
+% new_list_with_conditions(+List, -Result) - записывает в Result список квадратов элементов из List = FullList, удовлетворяющих условию из задания
+new_list_with_conditions(List, Result) :- new_list_with_conditions(List, List, Result).
+% new_list_with_conditions(+List, +FullList, -Result) - производит вычисления для предиката new_list_with_conditions(+List, -Result)
+new_list_with_conditions([], _, []) :- !.
+new_list_with_conditions([H|T], FullList, Result) :- new_list_with_conditions(T, FullList, PrevRes),
+    ((H >= 0, H < 100, count_in_list(FullList, H, Cnt), Cnt > 2) -> (Square is H * H, append([Square], PrevRes, Result)); Result = PrevRes).
+
+% program__new_list_with_conditions/0 - точка входа для построения нового списка, состоящего из квадратов элементов, удовлетворяющих условию из задания
+program__new_list_with_conditions :-
+    writeln("The program will construct a new list of squares of non-negative numbers less than 100 and occurring more than 2 times in the list."),
+    write("Please enter your list length here: "), read(Length),
+    write("Enter "), write(Length), writeln(" numbers separated by dots and spaces:"), read_list(Length, List),
+    write("Result: "), new_list_with_conditions(List, Result), write(Result).
