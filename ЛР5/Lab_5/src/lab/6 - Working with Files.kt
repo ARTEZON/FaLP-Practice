@@ -60,7 +60,7 @@ fun main(args: Array<String>) {
                 }
             }
         }
-        println("Запись в файл $fileIn")
+        println("Запись в файл $fileOut")
         fileOut.writeText(results.joinToString("\n"))
         println("Готово")
     }
